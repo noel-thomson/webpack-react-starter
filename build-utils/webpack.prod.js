@@ -3,7 +3,7 @@ const Dotenv = require("dotenv-webpack");
 const common = require("./webpack.common.js");
 const { merge } = require("webpack-merge");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
-const miniCssExtractPlugin = require("mini-css-extract-plugin");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 module.exports = merge(common, {
   mode: "production",
@@ -28,7 +28,7 @@ module.exports = merge(common, {
       path: "./.env.production",
     }),
     new CleanWebpackPlugin(),
-    new miniCssExtractPlugin({ filename: "[name].[hash].css" }),
+    new MiniCssExtractPlugin({ filename: "[name].[hash].css" }),
   ],
   module: {
     rules: [
@@ -36,7 +36,7 @@ module.exports = merge(common, {
         test: /\.scss$/,
         exclude: /node_modules/,
         use: [
-          miniCssExtractPlugin.loader, // 4. extract css into a file and minify
+          MiniCssExtractPlugin.loader, // 4. extract css into a file and minify
           "css-loader", // bundle css into js          {
           {
             loader: "postcss-loader", // 2. add vendor prefixes
@@ -58,7 +58,7 @@ module.exports = merge(common, {
         test: /\.css$/,
         exclude: /node_modules/,
         use: [
-          miniCssExtractPlugin.loader, // 4. extract css into a file and minify
+          MiniCssExtractPlugin.loader, // 4. extract css into a file and minify
           {
             loader: "css-loader",
             options: {
