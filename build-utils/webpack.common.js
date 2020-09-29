@@ -1,20 +1,14 @@
 const path = require("path");
-const webpack = require("webpack");
 
 module.exports = {
   entry: {
     index: "./src/index.js",
-    vender: "./src/vendor.js",
+    // vendor: "./src/vendor.js",
   },
   output: {
     path: path.resolve(__dirname, "../", "dist"),
-    publicPath: "/",
+    // publicPath: "/",
   },
-  devServer: {
-    contentBase: "./dist",
-    hot: true,
-  },
-  plugins: [new webpack.HotModuleReplacementPlugin()],
   module: {
     rules: [
       {
@@ -27,7 +21,7 @@ module.exports = {
         use: ["html-loader"], // requires assets with JS
       },
       {
-        test: /\.(svg|png|jpg|jpeg|gif|webp|mp3|wav|ogg|mp4|webm)$/,
+        test: /\.(svg|png|jpg|jpe?g|gif|webp|mp3|wav|ogg|mp4|webm)$/,
         use: [
           {
             loader: "file-loader", // exports assets to dist
@@ -62,7 +56,7 @@ module.exports = {
       },
     ],
   },
-  resolve: {
-    extensions: ["*", ".js", ".jsx"],
-  },
+  // resolve: {
+  //   extensions: ["*", ".js", ".jsx"],
+  // },
 };

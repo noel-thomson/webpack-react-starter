@@ -11,3 +11,4 @@ Features of this webpack configuration include:
 - image optimization
 - module bundling and minified builds
 - sass and vendor prefixing
+- css component modules

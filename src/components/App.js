@@ -1,11 +1,11 @@
 import React from "react";
-import styles from "./app.scss";
+import styles from "../css/App.css";
 
 const App = ({ greeting }) => {
   return (
-    <>
+    <app>
       <div className={styles.greeting}>{greeting}</div>
-    </>
+    </app>
   );
 };
 

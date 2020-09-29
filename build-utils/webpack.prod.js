@@ -8,18 +8,22 @@ const miniCssExtractPlugin = require("mini-css-extract-plugin");
 module.exports = merge(common, {
   mode: "production",
   output: {
-    filename: "[name].[hash].bundle.js",
+    filename: "[name].[contentHash].bundle.js",
   },
-  devtool: "source-map",
+  // devtool: "source-map",
+  optimization: {
+    minimizer: [
+      new HtmlWebpackPlugin({
+        template: "./src/index.html",
+        minify: {
+          // removeAttributeQuotes: true,
+          collapseWhitespace: true,
+          removeComments: true,
+        },
+      }),
+    ],
+  },
   plugins: [
-    new HtmlWebpackPlugin({
-      template: "./src/index.html",
-      minify: {
-        collapseWhitespace: true,
-        removeComments: true,
-        // removeAttributeQuotes: true,
-      },
-    }),
     new Dotenv({
       path: "./.env.production",
     }),
@@ -29,16 +33,11 @@ module.exports = merge(common, {
   module: {
     rules: [
       {
-        test: /\.(css|scss)$/,
+        test: /\.scss$/,
         exclude: /node_modules/,
         use: [
           miniCssExtractPlugin.loader, // 4. extract css into a file and minify
-          {
-            loader: "css-loader", // 3. turn css into JS
-            options: {
-              modules: true,
-            },
-          },
+          "css-loader", // bundle css into js          {
           {
             loader: "postcss-loader", // 2. add vendor prefixes
             options: {
@@ -50,7 +49,22 @@ module.exports = merge(common, {
           {
             loader: "sass-loader", // 1. convert sass into CSS
             options: {
-              sourceMap: true,
+              // sourceMap: true,
+            },
+          },
+        ],
+      },
+      {
+        test: /\.css$/,
+        exclude: /node_modules/,
+        use: [
+          miniCssExtractPlugin.loader, // 4. extract css into a file and minify
+          {
+            loader: "css-loader",
+            options: {
+              modules: {
+                localIdentName: "[path][name]__[local]--[hash:base64:5]",
+              },
             },
           },
         ],
